@@ -1,10 +1,4 @@
-//
-//  TestViewController.swift
-//  Client VK
-//
-//  Created by Василий Петухов on 24.07.2020.
-//  Copyright © 2020 Vasily Petuhov. All rights reserved.
-//
+
 
 import UIKit
 import WebKit
@@ -16,7 +10,7 @@ class AuthVKViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
-        //        removeCookie() //очистка куки, чтобы заново ввести логин и пароль
+//        removeCookie() //очистка куки, чтобы заново ввести логин и пароль
         loadAuthVK()
     }
     
@@ -29,7 +23,7 @@ class AuthVKViewController: UIViewController {
         urlConstructor.host = "oauth.vk.com"
         urlConstructor.path = "/authorize"
         urlConstructor.queryItems = [
-            URLQueryItem(name: "client_id", value: "8198978"),
+            URLQueryItem(name: "client_id", value: "7548358"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "friends,photos,groups"),
@@ -65,6 +59,7 @@ extension AuthVKViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
+        print(fragment)
         
         let params = fragment
             .components(separatedBy: "&")
@@ -77,11 +72,11 @@ extension AuthVKViewController: WKNavigationDelegate {
                 return dict
         }
         
-        DispatchQueue.main.async {
-            
-            if let token = params["access_token"], let userID = params["user_id"] {
+        //DispatchQueue.main.async {
+            if let token = params["access_token"], let userID = params["user_id"], let expiresIn = params["expires_in"] {
                 self.session.token = token
-                self.session.userId = Int(userID)!
+                self.session.userId = Int(userID) ?? 0
+                self.session.expiredDate = Date(timeIntervalSinceNow: TimeInterval(Int(expiresIn) ?? 0))
                 
                 decisionHandler(.cancel)
                 
@@ -92,7 +87,6 @@ extension AuthVKViewController: WKNavigationDelegate {
                 // просто переход на контроллер с логином при неуспешной авторизации
                 self.performSegue(withIdentifier: "AuthVKUnsuccessful", sender: nil)
             }
-            
-        }
+       // }
     }
 }

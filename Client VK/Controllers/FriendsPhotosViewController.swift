@@ -1,6 +1,7 @@
 
 
 import UIKit
+import Kingfisher
 
 class FriendsPhotosViewController: UIViewController {
     
@@ -11,13 +12,14 @@ class FriendsPhotosViewController: UIViewController {
         view.addGestureRecognizer(recognizer)
         
         //photoCurent.load(url: URL(string: allPhotos[countCurentPhoto])!)
-        photoCurent.kf.setImage(with: URL(string: allPhotos[countCurentPhoto])) //работает через Kingfisher (с кэшем)
+        //let xxx = allPhotos[countCurentPhoto].photo
+        photoCurent.kf.setImage(with: URL(string: allPhotos[countCurentPhoto].photo)) //работает через Kingfisher (с кэшем)
 
     }
     
     @IBOutlet weak var photoCurent: UIImageView!
     
-    var allPhotos:[String] = []
+    var allPhotos:[Photo] = []
     var countCurentPhoto = 0
     
     
@@ -62,7 +64,7 @@ class FriendsPhotosViewController: UIViewController {
             
         default: break
         }
-        photoCurent.kf.setImage(with: URL(string: allPhotos[countCurentPhoto]))
+        photoCurent.kf.setImage(with: URL(string: allPhotos[countCurentPhoto].photo))
     }
     
 }

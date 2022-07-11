@@ -1,6 +1,7 @@
 
 
 import UIKit
+import Kingfisher
 
 class GroupTableViewController: UITableViewController {
     
@@ -16,7 +17,7 @@ class GroupTableViewController: UITableViewController {
         }
     }
     
-    var myGroups: [Groups] = []
+    var myGroups: [Group] = []
 //    var myGroups = [
 //        Groups(groupName: "Самая лучшая группа", groupLogo: UIImage(named: "group1"))
 //    ]
@@ -34,15 +35,12 @@ class GroupTableViewController: UITableViewController {
         cell.nameGroupLabel.text = myGroups[indexPath.row].groupName
         
         if let imgUrl = URL(string: myGroups[indexPath.row].groupLogo) {
-            //let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
-            //cell.avatarFriendView.avatarImage.kf.setImage(with: avatar) //работает через Kingfisher
+            let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
+            cell.avatarGroupView.avatarImage.kf.indicatorType = .activity //работает через Kingfisher
+            cell.avatarGroupView.avatarImage.kf.setImage(with: avatar) //работает через Kingfisher
             
-            cell.avatarGroupView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
+            //cell.avatarGroupView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
         }
-        
-        
-        //let avatar = myGroups[indexPath.row].groupLogo //четко по массиву
-        //cell.avatarGroupView.avatarImage.image = avatar
         
         return cell
     }
@@ -69,11 +67,13 @@ class GroupTableViewController: UITableViewController {
             // проверка индекса ячейки
             if let indexPath = newGroupFromController.tableView.indexPathForSelectedRow {
                 //добавить новой группы в мои группы из общего списка групп
-                let newGroup = newGroupFromController.allGroups[indexPath.row]
+                let newGroup = newGroupFromController.GroupsList[indexPath.row]
                 
-                // проверка что группа уже в списке (нужен Equatable)
-                guard !myGroups.contains(newGroup) else { return }
+//                // проверка что группа уже в списке (нужен Equatable)
+                guard !myGroups.description.contains(newGroup.groupName) else { return }
                 myGroups.append(newGroup)
+
+                RealmOperations().saveGroupsToRealm(myGroups)
                 
                 tableView.reloadData()
             }
