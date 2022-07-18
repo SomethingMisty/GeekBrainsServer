@@ -7,22 +7,22 @@ struct PhotosResponse: Decodable {
     
     struct Response: Decodable {
         var count: Int
-        var items: [Items]
+        var items: [Item]
         
-        struct Items: Decodable {
-            var album_id: Int
-            var date: Int
-            var id: Int
-            var owner_id: Int
-            var has_tags: Bool
+        struct Item: Decodable {
+            //var album_id: Int
+            //var date: Int
+            //var id: Int
+            //var owner_id: Int
+            //var has_tags: Bool
             var sizes: [Sizes]
-            var text: String
+            //var text: String
             
             struct Sizes: Decodable {
-                var height: Int
+                //var height: Int
                 var url: String
-                var type: String
-                var width: Int
+                //var type: String
+                //var width: Int
             }
         }
     }
@@ -32,7 +32,7 @@ struct PhotosResponse: Decodable {
 class GetPhotosFriend {
     
     //данные для авторизации в ВК
-    func loadData(owner_id: String, complition: @escaping ([String]) -> Void ) {
+    func loadData(owner_id: String, complition: @escaping ([Photo]) -> Void ) {
         
         // Конфигурация по умолчанию
         let configuration = URLSessionConfiguration.default
@@ -59,11 +59,11 @@ class GetPhotosFriend {
             
             do {
                 let arrayPhotosFriend = try JSONDecoder().decode(PhotosResponse.self, from: data)
-                var photosFriend: [String] = []
+                var photosFriend: [Photo] = []
                 
                 for i in 0...arrayPhotosFriend.response.items.count-1 {
                     if let urlPhoto = arrayPhotosFriend.response.items[i].sizes.last?.url {
-                        photosFriend.append(urlPhoto)
+                        photosFriend.append(Photo.init(photo: urlPhoto))
                     }
                 }
                 complition(photosFriend)

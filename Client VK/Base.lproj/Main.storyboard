@@ -38,7 +38,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="username"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMo-Ac-YEI">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMo-Ac-YEI">
                                         <rect key="frame" x="50" y="485" width="314" height="34"/>
                                         <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
@@ -167,7 +167,7 @@
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendsCell" id="9k0-VZ-hgZ" customClass="FriendsTableViewCell" customModule="Client_VK" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendsCell" rowHeight="60" id="9k0-VZ-hgZ" customClass="FriendsTableViewCell" customModule="Client_VK" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9k0-VZ-hgZ" id="FxT-gq-gdE">
@@ -230,7 +230,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupsCell" id="3VK-Xi-lkD" customClass="GroupTableViewCell" customModule="Client_VK" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupsCell" rowHeight="60" id="3VK-Xi-lkD" customClass="GroupTableViewCell" customModule="Client_VK" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3VK-Xi-lkD" id="WeC-Me-W6m">
@@ -441,7 +441,7 @@
             </objects>
             <point key="canvasLocation" x="3089.8550724637685" y="1208.7053571428571"/>
         </scene>
-        <!--Добавить группу-->
+        <!--New Group Table View Controller-->
         <scene sceneID="dRc-cH-Qoa">
             <objects>
                 <tableViewController id="eqN-r0-WPg" customClass="NewGroupTableViewController" customModule="Client_VK" customModuleProvider="target" sceneMemberID="viewController">
@@ -487,7 +487,7 @@
                             <outlet property="delegate" destination="eqN-r0-WPg" id="3k4-Yf-Io9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Добавить группу" id="PcD-Dm-1TL"/>
+                    <navigationItem key="navigationItem" id="PcD-Dm-1TL"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vux-eT-dkP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="cjS-Ld-zUO" userLabel="Exit" sceneMemberID="exit"/>
