@@ -1,23 +1,36 @@
-
+//
+//  AvatarFriendCollectionViewController.swift
+//  Client VK
+//
+//  Created by Василий Петухов on 14.05.2020.
+//  Copyright © 2020 Vasily Petuhov. All rights reserved.
+//
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class PhotosFriendCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GetPhotosFriend().loadData(owner_id: userID) { [weak self] (complition) in
-            DispatchQueue.main.async {
-                self?.collectionPhotos = complition
-                self?.collectionView.reloadData()
-            }
+        loadPhotosFromRealm() // загрузка данных из реалма (кэш) для первоначального отображения
+        
+        // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
+        GetPhotosFriend().loadData(ownerID) { [weak self] () in
+            self?.loadPhotosFromRealm()
         }
+
     }
     
+<<<<<<< Updated upstream
     var userID = ""
     var collectionPhotos: [String] = []
+=======
+    var ownerID = ""
+    var collectionPhotos: [Photo] = []
+>>>>>>> Stashed changes
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionPhotos.count
@@ -52,6 +65,19 @@ class PhotosFriendCollectionViewController: UICollectionViewController {
         }
     }
     
+    // MARK: - functions
+    
+    func loadPhotosFromRealm() {
+        do {
+            let realm = try Realm()
+            let photosFromRealm = realm.objects(Photo.self).filter("ownerID == %@", ownerID)
+            collectionPhotos = Array(photosFromRealm)
+            guard collectionPhotos.count != 0 else { return } // проверка, что в реалме что-то есть
+            collectionView.reloadData()
+        } catch {
+            print(error)
+        }
+    }
     
     
 }

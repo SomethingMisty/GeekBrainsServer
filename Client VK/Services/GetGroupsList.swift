@@ -1,5 +1,4 @@
 
-
 import Foundation
 
 struct GroupsResponse: Decodable {
@@ -21,7 +20,11 @@ struct GroupsResponse: Decodable {
 class GetGroupsList {
     
     //данные для авторизации в ВК
+<<<<<<< Updated upstream
     func loadData(complition: @escaping ([Groups]) -> Void ) {
+=======
+    func loadData(complition: @escaping () -> Void ) {
+>>>>>>> Stashed changes
         
         // Конфигурация по умолчанию
         let configuration = URLSessionConfiguration.default
@@ -55,10 +58,19 @@ class GetGroupsList {
                     let avatar = arrayGroups.response.items[i].photo_50
                     fullGroupList.append(Groups.init(groupName: name, groupLogo: avatar))
                 }
+<<<<<<< Updated upstream
                 complition(fullGroupList)
+=======
+                
+                DispatchQueue.main.async {
+                    RealmOperations().saveGroupsToRealm(grougList)
+                    complition()
+                }
+                
+>>>>>>> Stashed changes
             } catch let error {
                 print(error)
-                complition([])
+                complition()
             }
         }
         task.resume()

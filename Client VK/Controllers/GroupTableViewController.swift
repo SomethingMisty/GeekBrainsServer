@@ -1,25 +1,33 @@
 
 
 import UIKit
+<<<<<<< Updated upstream
+=======
+import Kingfisher
+import RealmSwift
+>>>>>>> Stashed changes
 
 class GroupTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // получение данный json в зависимости от требования
-        GetGroupsList().loadData() { [weak self] (complition) in
-            DispatchQueue.main.async {
-                self?.myGroups = complition
-                self?.tableView.reloadData()
-            }
+                
+        loadGroupsFromRealm() // загрузка данных из реалма (кэш) для первоначального отображения
+
+        // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
+        GetGroupsList().loadData() { [weak self] () in
+            self?.loadGroupsFromRealm()
         }
     }
     
+<<<<<<< Updated upstream
     var myGroups: [Groups] = []
 //    var myGroups = [
 //        Groups(groupName: "Самая лучшая группа", groupLogo: UIImage(named: "group1"))
 //    ]
+=======
+    var myGroups: [Group] = []
+>>>>>>> Stashed changes
     
 
     // MARK: - Table view data source
@@ -71,12 +79,44 @@ class GroupTableViewController: UITableViewController {
                 //добавить новой группы в мои группы из общего списка групп
                 let newGroup = newGroupFromController.allGroups[indexPath.row]
                 
+<<<<<<< Updated upstream
                 // проверка что группа уже в списке (нужен Equatable)
                 guard !myGroups.contains(newGroup) else { return }
                 myGroups.append(newGroup)
+=======
+//                // проверка что группа уже в списке (нужен Equatable)
+                guard !myGroups.description.contains(newGroup.groupName) else { return }
+
+                myGroups.append(newGroup)
+                
+                //  добавление одной новой группы в реалм
+//                do {
+//                    let realm = try Realm()
+//                    try realm.write{
+//                        realm.add(newGroup)
+//                    }
+//                } catch {
+//                    print(error)
+//                }
+//                loadGroupsFromRealm()
+>>>>>>> Stashed changes
                 
                 tableView.reloadData()
             }
+        }
+    }
+    
+    // MARK: - functions
+    
+    func loadGroupsFromRealm() {
+        do {
+            let realm = try Realm()
+            let groupsFromRealm = realm.objects(Group.self)
+            myGroups = Array(groupsFromRealm)
+            guard groupsFromRealm.count != 0 else { return } // проверка, что в реалме что-то есть
+            tableView.reloadData()
+        } catch {
+            print(error)
         }
     }
 
