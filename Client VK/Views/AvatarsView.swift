@@ -1,5 +1,4 @@
 
-
 import UIKit
 
 @IBDesignable class AvatarsView: UIView {
